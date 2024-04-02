@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Chat with AI</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.0/socket.io.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <script type="text/javascript">
+        document.addEventListener('DOMContentLoaded', () => {
+            const socket = io();
+            
+            document.querySelector('#send_message').onclick = () => {
+                let message = document.querySelector('#user_message').value;
+                if (message.trim() != "") {
+                socket.emit('message', {'message': message});
+                appendMessage(message, 'user');
+                document.querySelector('#user_message').value = '';
+                }
+            };
+
+            socket.on('response', data => {
+                appendMessage(data.message, 'ai');
+            });
+
+            function appendMessage(message, sender) {
+                const messageDiv = document.createElement('div');
+                messageDiv.classList.add('message', sender);
+                if (sender === 'user') {
+                    messageDiv.innerHTML = `<span class="icon"><i class="fas fa-user"></i></span><p>${message}</p>`;
+                } else {
+                    messageDiv.innerHTML = `<span class="icon"><i class="fas fa-robot"></i></span><p>${message}</p>`;
+                }
+                document.querySelector('#messages').appendChild(messageDiv);
+            }
+        });
+    </script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f2f2f2;
+        }
+        #chatbox {
+            width: 350px;
+            border: 1px solid #ddd;
+            background: #fff;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        #messages {
+            height: 300px;
+            overflow-y: auto;
+            margin-bottom: 10px;
+            padding: 10px;
+            border: 1px solid #ddd;
+        }
+        .message {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .message.ai .icon {
+            color: #0077ff;
+            margin-right: 10px;
+        }
+        .message.user .icon {
+            color: #ff7700;
+            margin-left: 10px;
+        }
+        .message p {
+            margin: 0;
+            padding: 10px;
+            background: #f4f4f4;
+            border-radius: 10px;
+            border: 1px solid #ddd;
+            flex-grow: 1;
+        }
+        .message.ai p {
+            border-top-left-radius: 0;
+        }
+        .message.user p {
+            border-top-right-radius: 0;
+        }
+        #input-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        #user_message {
+            flex-grow: 1;
+            padding: 10px;
+            margin-right: 10px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            border-top-right-radius: 0; /* Now the top-right corner is not rounded */
+            border-bottom-right-radius: 0; /* Now the bottom-right corner is not rounded */
+        }
+
+        #send_message {
+            padding: 10px;
+            background: #0077ff;
+            border: none;
+            border-radius: 10px;
+            border-top-left-radius: 0; /* Now the top-left corner is not rounded */
+            border-bottom-left-radius: 0; /* Now the bottom-left corner is not rounded */
+            color: white;
+            cursor: pointer;
+        }
+
+        #send_message:hover {
+            background: #005fcc;
+        }
+
+        /* Adjust styles for the message box */
+        .message p {
+            margin: 0;
+            padding: 10px;
+            background: #f4f4f4;
+            border-radius: 10px;
+            border: 1px solid #ddd;
+            flex-grow: 1;
+        }
+        #send_message:hover {
+            background: #005fcc;
+        }
+    </style>
+</head>
+<body>
+    <div id="chatbox">
+        <h1>Chat with AI</h1>
+        <div id="messages"></div>
+        <div id="input-container">
+            <input type="text" id="user_message" autofocus placeholder="Type a message..." />
+            <button id="send_message"><i class="fas fa-paper-plane"></i></button>
+        </div>
+    </div>
+</body>
+</html>
