@@ -14,7 +14,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 EXPOSE 5000
 
 # Define environment variable for OpenAI API key
-ENV OPENAI_SECRET_KEYex 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
+# ENV OPENAI_SECRET_KEY YOUR-API-KEY-HERE
 
 # Run app.py when the container launches
 CMD ["python", "app.py"]
