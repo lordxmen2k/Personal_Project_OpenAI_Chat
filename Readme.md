@@ -19,7 +19,7 @@ Replace `your-image-name` with the name you want to give your Docker image.
 
 ## Running the Docker Container
 
-Once the image is built, you can run a container from that image and map the internal port `5000` to the external port `5050` using:
+Once the image is built, you can run a container from that image and map the internal port `5000` to the external port `5000` using:
 
 ```bash
 docker run -p 0.0.0.0:5000:5000 -e OPENAI_SECRET_KEY='YOUR-API-KEY-HERE' openai-chat
@@ -27,7 +27,7 @@ docker run -p 0.0.0.0:5000:5000 -e OPENAI_SECRET_KEY='YOUR-API-KEY-HERE' openai-
 
 Make sure that the application inside the container is configured to listen on port `5000`, as indicated in the Dockerfile by the `EXPOSE 5000` directive.
 
-Access your application by visiting `http://localhost:5051` on your web browser.
+Access your application by visiting `http://localhost:5000` on your web browser.
 
 ## Stopping the Docker Container
 
