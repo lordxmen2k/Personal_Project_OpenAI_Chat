@@ -45,4 +45,4 @@ To stop the running container:
    docker stop <container-id-or-name>
    ```
 
-That's it! You have successfully built and run a Docker container using port 5050.
+That's it! You have successfully built and run a Docker container using port 5000.
